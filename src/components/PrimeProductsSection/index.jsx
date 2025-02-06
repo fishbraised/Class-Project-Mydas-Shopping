@@ -85,7 +85,7 @@ class PrimeProductsSection extends Component {
 
   renderLoader = () => {
     return (
-      <div className="loader-con">
+      <div className="prime-products-loader-con">
         <ThreeDots color="#ba864d" />
       </div>
     );

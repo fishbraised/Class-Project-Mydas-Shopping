@@ -1,0 +1,50 @@
+.similar-products-image {
+    width: 250px;
+    height: 250x;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.similar-products-title {
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: var(--shade-3);
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.similar-products-brand {
+    margin-top: 10px;
+    color: var(--shade-2);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.similar-products-price-and-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.similar-products-price {
+    color: var(--shade-3);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+                                
+.similar-products-rating {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary);
+    padding: 0.125em 0.75em;
+    border-radius: 6px;
+    color: var(--shade-1);
+    background-color: var(--secondary);
+    font-size: 1.6rem;
+}
+
+.similar-products-rating span {
+    padding-left: 5px;
+    margin-top: 5px;
+}
+                   

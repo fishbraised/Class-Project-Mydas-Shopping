@@ -151,7 +151,7 @@ class AllProductsSection extends Component {
 
   renderLoader = () => {
     return (
-      <div className="loader-con">
+      <div className="all-products-loader-con">
         <ThreeDots color="#ba864d" />
       </div>
     );

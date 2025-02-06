@@ -14,7 +14,9 @@
   object-position: top;
 }
 
-.loader-con {
+.prime-products-loader-con {
   display: flex;
-  place-content: center;
+  justify-content: center;
+  align-items: center;
 }
+  

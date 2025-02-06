@@ -1,6 +1,9 @@
-.loader-con {
+.all-products-loader-con {
   display: flex;
-  place-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  height: 80vh;
 }
 
 .all-products-section {
@@ -15,3 +18,4 @@
   width: 850px;
   padding-left: 7em;
 }
+
