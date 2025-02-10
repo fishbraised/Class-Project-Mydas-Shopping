@@ -7,7 +7,7 @@ const SimilarProductsList = (props) => {
 
     return (
         <ul className="similar-products-list">
-            {similarProductsInfo.map((eachObj) => <SimilarProductItem similarProductInfo={eachObj} />)}
+            {similarProductsInfo.map((eachObj) => <SimilarProductItem key={eachObj.id} similarProductInfo={eachObj} />)}
         </ul>
     );
 }

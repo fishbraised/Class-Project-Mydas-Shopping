@@ -6,6 +6,8 @@ import SimilarProductsList from "../SimilarProductsList"
 import { FaStar } from "react-icons/fa";
 import { ThreeDots } from "react-loader-spinner";
 
+import CartContext from '../../context/CartContext';
+
 import "./index.css";
 import { Component } from "react";
 
@@ -18,7 +20,23 @@ const apiStatusConstants = {
   };
 
 class ProductItemDetails extends Component {
-    state = { productDetails: [], apiStatus: apiStatusConstants.initial };
+    state = { productDetails: [], apiStatus: apiStatusConstants.initial, quantity: 1 };
+
+    increaseQuantity = () => {
+        this.setState((prevState) => ({
+            quantity: prevState.quantity + 1,
+        }));
+    }
+
+    decreaseQuantity = () => {
+        const { quantity } = this.state;
+
+        if (quantity > 1) {
+            this.setState((prevState) => ({
+                quantity: prevState.quantity - 1,
+            }));
+        }
+    }
 
     getProductDetailsSuccess = (data) => {
         const updatedData = {
@@ -44,9 +62,9 @@ class ProductItemDetails extends Component {
             style: data.style,
             title: data.title,
             totalReviews: data.total_reviews,
-        }
+        };
 
-        this.setState({ productDetails: updatedData, apiStatus: apiStatusConstants.success})
+        this.setState({ productDetails: updatedData, apiStatus: apiStatusConstants.success});
     }
 
     getProductDetailsFailure = () => {
@@ -80,57 +98,69 @@ class ProductItemDetails extends Component {
         }
     }
 
-    renderSuccessView = () => {
-        const { productDetails } = this.state;
+    renderSuccessView = () => (
+        <CartContext.Consumer>
+            {(value) => {
+                const { addCartItem } = value;
 
-        return (
-            <div className="product-item-details">
-                <div className="product-item-content">
-                    <section>
-                        <img className="product-item-image" src={productDetails.imageUrl} alt="product-item-image" />
-                        
-                        <div className="product-info">
-                            <h2 className="product-item-name">{productDetails.title}</h2>
-                            <h2 className="product-item-price">{productDetails.price}</h2>
-                            
-                            <div className="product-item-rating-and-reviews">
-                                <div className="product-item-rating">
-                                    {productDetails.rating}
-                                    <span>
-                                        <FaStar />
-                                    </span>
+                const { productDetails, quantity } = this.state;
+
+                const onAddCartItem = () => {
+                    addCartItem({ ...productDetails, quantity });
+                }
+
+                return (
+                    <div className="product-item-details">
+                        <div className="product-item-content">
+                            <section>
+                                <img className="product-item-image" src={productDetails.imageUrl} alt="product-item-image" />
+                                
+                                <div className="product-info">
+                                    <h2 className="product-item-name">{productDetails.title}</h2>
+                                    <h2 className="product-item-price">{productDetails.price}</h2>
+                                    
+                                    <div className="product-item-rating-and-reviews">
+                                        <div className="product-item-rating">
+                                            {productDetails.rating}
+                                            <span>
+                                                <FaStar />
+                                            </span>
+                                        </div>
+
+                                        <p className="product-item-reviews">{productDetails.totalReviews}</p>
+                                    </div>
+                                    
+                                    <p className="product-item-description">{productDetails.description}</p>
+                                    <p className="product-item-info"><span>Availablility:</span> {productDetails.availability}</p>
+                                    <p className="product-item-info"><span>Brand:</span> {productDetails.brand}</p>
+
+                                    <hr className="product-item-line"/>
+
+                                    <div className="product-item-quantity-adjustment">
+                                        <button className="product-item-quantity-btn" onClick={this.decreaseQuantity}>-</button>
+                                        <p className="product-item-quantity">{quantity}</p>
+                                        <button className="product-item-quantity-btn" onClick={this.increaseQuantity}>+</button>
+                                    </div>
+
+                                    <button className="product-item-cart-add-btn" onClick={onAddCartItem}>ADD TO CART</button>
                                 </div>
+                            </section>
 
-                                <p className="product-item-reviews">{productDetails.totalReviews}</p>
+                            <div className="similar-products-content">
+                                <h2 className="similar-products-heading">
+                                    Similar Products
+                                </h2>
+
+                                <SimilarProductsList similarProductsInfo={productDetails.similarProducts}/> 
                             </div>
-                            
-                            <p className="product-item-description">{productDetails.description}</p>
-                            <p className="product-item-info"><span>Availablility:</span> {productDetails.availability}</p>
-                            <p className="product-item-info"><span>Brand:</span> {productDetails.brand}</p>
-
-                            <hr className="product-item-line"/>
-
-                            <div className="product-item-quantity-adjustment">
-                                <button className="product-item-quantity-btn">-</button>
-                                <p className="product-item-quantity">1</p>
-                                <button className="product-item-quantity-btn">+</button>
-                            </div>
-
-                            <button className="product-item-cart-add-btn">ADD TO CART</button>
                         </div>
-                    </section>
-
-                    <div className="similar-products-content">
-                        <h2 className="similar-products-heading">
-                            Similar Products
-                        </h2>
-
-                        <SimilarProductsList similarProductInfo={productDetails.similarProducts}/> 
                     </div>
-                </div>
-            </div>
-        )
-    }
+                )
+            }}
+
+            
+        </CartContext.Consumer>
+    )
 
     renderFailureView = () => {
         return (

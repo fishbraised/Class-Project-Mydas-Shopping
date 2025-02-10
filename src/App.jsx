@@ -15,25 +15,21 @@ import "./App.css";
 import { Component } from "react";
 
 class App extends Component {
-  state = { cartList: [{
-    title: 'Product 1',
-    brand: 'Brand Name',
-    id: 1001,
-    imageUrl: 'https://assets.ccbp.in/frontend/react-js/sample-product-img.jpg',
-    price: 760,
-    quantity: 5,
-},] };
+  state = { cartList: [] };
 
-  addCartItem = () => {
-
+  addCartItem = (product) => {
+    this.setState((prevState) => ({
+      cartList: [...prevState.cartList, product],
+    }))
   }
 
-  removeCartItem = () => {
+  removeCartItem = (product) => {
     
   }
 
   render() {
     const { cartList } = this.state;
+    console.log(cartList);
 
     return (
       <BrowserRouter>

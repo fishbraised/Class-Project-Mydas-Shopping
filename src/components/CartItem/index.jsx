@@ -5,7 +5,7 @@ import './index.css';
 
 const CartItem = props => {
   const {cartItemDetails} = props
-  const {title, brand, quantity, price, imageUrl} = cartItemDetails
+  const {title, brand, quantity, price, imageUrl } = cartItemDetails
 
   return (
     <li className="cart-item">
