@@ -18,8 +18,6 @@ class LoginForm extends Component {
 
     // history.push("/");
     history.replace("/");
-
-    console.log(this.props);
   };
 
   onSubmitFailure = (errorMsg) => {
@@ -51,8 +49,6 @@ class LoginForm extends Component {
 
     const response = await fetch(URL, options);
     const data = await response.json();
-
-    console.log(data);
 
     if (response.ok) {
       this.onSubmitSuccess(data.jwt_token);

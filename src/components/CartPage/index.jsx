@@ -9,9 +9,8 @@ import './index.css';
 const CartPage = () => (
   <CartContext.Consumer>
     {(value) => {
-      const  { CartList } = value;
-      console.log("CartList: ", CartList);
-      const showEmptyView = CartList.length === 0;
+      const  { cartList } = value;
+      const showEmptyView = cartList.length === 0;
       
 
       return (

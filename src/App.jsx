@@ -24,12 +24,15 @@ class App extends Component {
   }
 
   removeCartItem = (product) => {
-    
+    // const cartList = this.state;
+
+    // const productIndex = cartList.findIndex((eachObj) => eachObj == product);
   }
 
   render() {
     const { cartList } = this.state;
-    console.log(cartList);
+    // console.log("cartList: ", cartList);
+    // this.removeCartItem();
 
     return (
       <BrowserRouter>

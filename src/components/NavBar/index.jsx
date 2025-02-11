@@ -1,8 +1,21 @@
 import { Link, withRouter } from "react-router-dom";
 import Cookies from "js-cookie";
+
+import CartContext from "../../context/CartContext";
+
 import "./index.css";
 
 const NavBar = (props) => {
+  const renderCartCount = () => (
+    <CartContext.Consumer>
+      {(value) => {
+        const { cartList } = value;
+        
+        return <span className="cart-count-badge">{cartList.length}</span>
+      }}
+    </CartContext.Consumer>
+  )
+
   const onLogOut = () => {
     Cookies.remove("jwt_token");
 
@@ -32,7 +45,7 @@ const NavBar = (props) => {
           </li>
           <li>
             <Link className="nav-link" to="/cart">
-              <button>Cart</button>
+              <button>Cart {renderCartCount()}</button>
             </Link>
           </li>
         </ul>
@@ -41,6 +54,7 @@ const NavBar = (props) => {
       </div>
     </nav>
   );
+  
 };
 
 export default withRouter(NavBar);
