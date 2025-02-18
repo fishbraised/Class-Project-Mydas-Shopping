@@ -36,3 +36,15 @@
         font-size: 48px;
     }
 }
+
+.cart-remove-all-btn {
+    all: unset;
+
+    width: 100%;
+    text-align: right;
+    color: #0b69ff;
+    font-family: "roboto";
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}

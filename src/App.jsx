@@ -18,15 +18,72 @@ class App extends Component {
   state = { cartList: [] };
 
   addCartItem = (product) => {
-    this.setState((prevState) => ({
-      cartList: [...prevState.cartList, product],
-    }))
+    let { cartList } = this.state;
+
+    let result = cartList.find((eachObj) => eachObj.id === product.id);
+
+    if (result) {
+      result.quantity += product.quantity;
+    } else {
+      cartList = [...cartList, product]
+    }
+
+    this.setState({ cartList: [...cartList] })
   }
 
   removeCartItem = (product) => {
-    // const cartList = this.state;
+    const { cartList } = this.state;
+    
+    const tempCartList = cartList;
+    const productIndex = cartList.findIndex((eachObj) => eachObj.id === product);
 
-    // const productIndex = cartList.findIndex((eachObj) => eachObj == product);
+    tempCartList.splice(productIndex, 1);
+
+    this.setState({ cartList: tempCartList });
+  }
+
+  removeAllCartItems = () => {
+    this.setState({ cartList: [] })
+  }
+
+  decreaseItemQuantity = (product) => {
+    let { cartList } = this.state;
+
+    let result = cartList.find((eachObj) => eachObj.id === product.id);
+
+    if (result && result.quantity > 1) {
+      result.quantity -= 1;
+    } else if (result.quantity <= 1) {
+      const tempCartList = cartList;
+      const productIndex = tempCartList.findIndex((eachObj) => eachObj.id === product.id);
+
+      tempCartList.splice(productIndex, 1);
+    }
+
+    this.setState({ cartList: [...cartList] })
+
+
+    // const updatedCartList = cartList.map((eachObj) => {
+    //   if (eachObj.id === product.id) {
+    //     return { ...eachObj, quantity: eachObj.quantity -= 1 };
+    //   } else {
+    //     return eachObj;
+    //   };
+    // });
+
+    // this.setState({ cartList: updatedCartList});
+  }
+
+  increaseItemQuantity = (product) => {
+    let { cartList } = this.state;
+
+    let result = cartList.find((eachObj) => eachObj.id === product.id);
+
+    if (result) {
+      result.quantity += 1;
+    }
+
+    this.setState({ cartList: [...cartList]})
   }
 
   render() {
@@ -36,7 +93,7 @@ class App extends Component {
 
     return (
       <BrowserRouter>
-        <CartContext.Provider value={{cartList, addCartItem: this.addCartItem, removeCartItem: this.removeCartItem}}>
+        <CartContext.Provider value={{cartList, addCartItem: this.addCartItem, removeCartItem: this.removeCartItem, removeAllCartItems: this.removeAllCartItems, decreaseItemQuantity: this.decreaseItemQuantity, increaseItemQuantity: this.increaseItemQuantity }}>
           <Switch>
             <Route exact path="/login" component={LoginForm} />
             <ProtectedRoute exact path="/" component={HomePage} />
